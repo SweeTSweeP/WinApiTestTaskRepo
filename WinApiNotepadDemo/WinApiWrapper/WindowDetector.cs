@@ -86,13 +86,9 @@ namespace WinApiNotepadDemo.WinApiWrapper
         /// <param name="handle">Handle of the next window</param>
         /// <param name="pointer">Pointer to a GCHandle that holds a reference to the list to fill</param>
         /// <returns>True to continue the enumeration, false to bail</returns>
-        private static bool EnumWindow(IntPtr handle, int pointer)
+        private static bool EnumWindow(IntPtr handle, IntPtr pointer)
         {
             GCHandle gch = GCHandle.FromIntPtr(new IntPtr(pointer));
-
-            var target = gch.Target;
-
-            var i = 0;
 
             if (gch.Target is not List<IntPtr> list)
             {
