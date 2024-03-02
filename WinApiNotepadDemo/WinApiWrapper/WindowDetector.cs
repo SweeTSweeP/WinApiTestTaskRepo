@@ -4,7 +4,7 @@ using static WinApiNotepadDemo.WinApiWrapper.EnumWindowProcess;
 
 namespace WinApiNotepadDemo.WinApiWrapper
 {
-    internal class WindowDetector
+    public class WindowDetector
     {
         public List<IntPtr> GetAllWindowsByProcess(string processName, bool onlyVisible)
         {
@@ -12,14 +12,14 @@ namespace WinApiNotepadDemo.WinApiWrapper
 
             Process? process = null;
 
-            Process[] p = Process.GetProcessesByName(processName);
+            var p = Process.GetProcessesByName(processName);
             
             if (p.Length > 0)
                 process = p[0]; 
             else 
                 return result;
 
-            nint win = process.MainWindowHandle;
+            var win = process.MainWindowHandle;
 
             result.Add(win);
 
@@ -27,7 +27,7 @@ namespace WinApiNotepadDemo.WinApiWrapper
 
             List<IntPtr> additional = new();
 
-            foreach (IntPtr w in result) 
+            foreach (var w in result) 
                 if (w != win) 
                     additional.AddRange(GetChildWindows(w));
 
@@ -35,7 +35,7 @@ namespace WinApiNotepadDemo.WinApiWrapper
 
             result = result.Distinct().ToList();
 
-            for (int i = 0; i < result.Count; i++)
+            for (var i = 0; i < result.Count; i++)
             {
                 if ((onlyVisible && !WinApiWrapper.IsWindowVisible(result[i])) || (GetProcessId(result[i]) != process.Id))
                 {
@@ -55,7 +55,7 @@ namespace WinApiNotepadDemo.WinApiWrapper
         private List<IntPtr> GetChildWindows(IntPtr parent)
         {
             List<IntPtr> result = new();
-            GCHandle listHandle = GCHandle.Alloc(result);
+            var listHandle = GCHandle.Alloc(result);
 
             try
             {
@@ -73,7 +73,7 @@ namespace WinApiNotepadDemo.WinApiWrapper
 
         private int GetProcessId(IntPtr win)
         {
-            int id = 0;
+            var id = 0;
 
             WinApiWrapper.GetWindowThreadProcessId(win, ref id);
 
@@ -88,7 +88,7 @@ namespace WinApiNotepadDemo.WinApiWrapper
         /// <returns>True to continue the enumeration, false to bail</returns>
         private static bool EnumWindow(IntPtr handle, IntPtr pointer)
         {
-            GCHandle gch = GCHandle.FromIntPtr(new IntPtr(pointer));
+            var gch = GCHandle.FromIntPtr(new IntPtr(pointer));
 
             if (gch.Target is not List<IntPtr> list)
             {

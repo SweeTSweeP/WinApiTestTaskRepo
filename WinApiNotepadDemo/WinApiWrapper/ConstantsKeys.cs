@@ -2,6 +2,7 @@
 {
     public static class ConstantsKeys
     {
+        public const int VK_RETURN = 13;
         public const int VK_MENU = 18;
         public const int VK_SPACE = 32;
         public const int VK_SNAPSHOT = 44;

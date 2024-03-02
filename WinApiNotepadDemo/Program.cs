@@ -1,4 +1,5 @@
 ﻿using WinApiNotepadDemo.WinApiWrapper;
+using System.Windows;
 
 namespace WinApiNotepadDemo
 {
@@ -8,10 +9,14 @@ namespace WinApiNotepadDemo
         {
             WindowDetector detector = new();
             Keyboard keyboard = new();
+            Clipboard clipboard = new();
+            KeyboardLayout keyboardLayout = new();
 
             System.Diagnostics.Process.Start("notepad");
             Thread.Sleep(2000);
-
+           
+            clipboard.SaveDataToClipboard("Text from clipboard");
+            
             var windows = detector.GetAllWindowsByProcess("notepad", false);
 
             foreach (var window in windows)
@@ -21,9 +26,15 @@ namespace WinApiNotepadDemo
 
             mainWindow.Maximize();
             mainWindow.SetFocused();
+            
+            keyboard.PasteText();
+            keyboard.PressEnter();
 
-            keyboard.Type("hello, hello, hello how are you", 5);
-            Console.ReadLine();
+            keyboardLayout.SetKeyboardLayoutAltShift(keyboard, KeyboardLayout.Language.English);
+            keyboard.Type("Hello ", 5);
+
+            keyboardLayout.SetKeyboardLayoutAltShift(keyboard, KeyboardLayout.Language.Russian);
+            keyboard.Type("Ghbdtn ", 5);
         }
     }
 }

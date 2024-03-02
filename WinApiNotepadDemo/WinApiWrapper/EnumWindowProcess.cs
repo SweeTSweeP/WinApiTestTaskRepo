@@ -1,6 +1,6 @@
 ﻿namespace WinApiNotepadDemo.WinApiWrapper
 {
-    internal class EnumWindowProcess
+    public class EnumWindowProcess
     {
         /// <summary>
         /// Delegate for the EnumChildWindows method

@@ -2,29 +2,59 @@
 
 namespace WinApiNotepadDemo.WinApiWrapper
 {
-    internal class Keyboard
+    public class Keyboard
     {
         private Random random = new(Environment.TickCount);
 
         public void Type(string text, int delay) =>
             Type(text, delay, delay);
         
-        public void Type(string text, int delayFrom, int delayTo)
-        {
-            for (int i = 0; i < text.Length; i++)
-            {
-                char c = text[i];
+        public void PressEnter() => 
+            PressKey(ConstantsKeys.VK_RETURN);
 
-                bool shift = char.IsUpper(c);
+        public void PasteText() => 
+            PressKey((int)char.ToUpper('v'), false, false, true);
+        
+        public void PressCtrlShift()
+        {
+            //PressKey(ConstantsKeys.VK_LSHIFT, false, true, false);
+            
+            const int KEYEVENTF_EXTENDEDKEY = 0x0001;
+            const int KEYEVENTF_KEYUP = 0x0002;
+            const int VK_CONTROL = 0x11; // Код клавиши "Ctrl"
+            const int VK_SHIFT = 0x10;
+            
+            WinApiWrapper.keybd_event(VK_CONTROL, 0, KEYEVENTF_EXTENDEDKEY, UIntPtr.Zero);
+
+            // Нажатие клавиши "Shift"
+            WinApiWrapper.keybd_event(VK_SHIFT, 0, KEYEVENTF_EXTENDEDKEY, UIntPtr.Zero);
+
+            // Отпускание клавиш "Ctrl" и "Shift"
+            WinApiWrapper.keybd_event(VK_SHIFT, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, UIntPtr.Zero);
+            WinApiWrapper.keybd_event(VK_CONTROL, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, UIntPtr.Zero);
+        }
+
+        private void Type(string text, int delayFrom, int delayTo)
+        {
+            foreach (var symbol in text)
+            {
+                var shift = char.IsUpper(symbol);
 
                 int key;
-                if (char.IsLetterOrDigit(c)) key = (int)char.ToUpper(c);
+                if (char.IsLetterOrDigit(symbol)) 
+                    key = (int)char.ToUpper(symbol);
                 else
-                {
-                    if (c == '.' || c == ',') key = ConstantsKeys.VK_DECIMAL;
-                    else if (c == ' ') key = ConstantsKeys.VK_SPACE;
-                    else continue;
-                }
+                    switch (symbol)
+                    {
+                        case '.' or ',':
+                            key = ConstantsKeys.VK_DECIMAL;
+                            break;
+                        case ' ':
+                            key = ConstantsKeys.VK_SPACE;
+                            break;
+                        default:
+                            continue;
+                    }
 
                 PressKey(key, shift, false, false);
 
@@ -34,14 +64,13 @@ namespace WinApiNotepadDemo.WinApiWrapper
             }
         }
 
-        public void PressKey(int key, bool shift, bool alt, bool ctrl) => 
+        private void PressKey(int key, bool shift, bool alt, bool ctrl) => 
             PressKey(key, shift, alt, ctrl, 0);
 
-        public void PressKey(int key) => 
+        private void PressKey(int key) => 
             PressKey(key, false, false, false);
-
-
-        public void PressKey(int key, bool shift, bool alt, bool ctrl, int holdFor)
+        
+        private void PressKey(int key, bool shift, bool alt, bool ctrl, int holdFor)
         {
             byte bScan = 0x45;
             

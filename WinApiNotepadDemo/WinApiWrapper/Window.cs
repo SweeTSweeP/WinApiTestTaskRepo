@@ -2,13 +2,14 @@
 
 namespace WinApiNotepadDemo.WinApiWrapper
 {
-    internal class Window
+    public class Window
     {
         public string GetClass(IntPtr win)
         {
             if (win == IntPtr.Zero) return "";
 
-            StringBuilder title = new StringBuilder(512);
+            var title = new StringBuilder(512);
+            
             WinApiWrapper.RealGetWindowClass(win, title, 512);
 
             return title.ToString().Trim();
@@ -22,7 +23,7 @@ namespace WinApiNotepadDemo.WinApiWrapper
         public string? GetTitle(IntPtr hWnd)
         {
             const int nChars = 256;
-            StringBuilder Buff = new StringBuilder(nChars);
+            var Buff = new StringBuilder(nChars);
 
             if (WinApiWrapper.GetWindowText(hWnd, Buff, nChars) > 0)
                 return Buff.ToString();

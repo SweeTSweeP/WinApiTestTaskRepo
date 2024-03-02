@@ -33,10 +33,35 @@ namespace WinApiNotepadDemo.WinApiWrapper
         [DllImport("user32.dll")]
         public static extern void keybd_event(int bVk, byte bScan, UInt32 dwFlags, int dwExtraInfo);
 
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool OpenClipboard(IntPtr hWndNewOwner);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool CloseClipboard();
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetClipboardData(uint uFormat, IntPtr data);
+        
+        [DllImport("user32.dll")]
+        public static extern IntPtr LoadKeyboardLayout(string pwszKLID, uint Flags);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr ActivateKeyboardLayout(IntPtr hkl, uint Flags);
+        
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetKeyboardLayout(uint idThread);
+        
+        [DllImport("user32.dll")]
+        public static extern int GetKeyboardLayoutList(int nBuff, [Out] IntPtr[] lpList);
+        
+        [DllImport("user32.dll")]
+        public static extern int GetKeyboardLayoutName([Out] StringBuilder pwszKLID);
+        
         internal const UInt32 KEYEVENTF_EXTENDEDKEY = 1;
         internal const UInt32 KEYEVENTF_KEYUP = 2;
         internal const int KEY_ALT = 0x12;
         internal const int KEY_CONTROL = 0x11;
-
     }
 }
