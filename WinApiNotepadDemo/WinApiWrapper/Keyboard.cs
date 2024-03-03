@@ -8,88 +8,85 @@ namespace WinApiNotepadDemo.WinApiWrapper
 
         public void Type(string text, int delay) =>
             Type(text, delay, delay);
+
+        public void PasteText() => 
+            PressKey((byte)char.ToUpper('v'), false, false, true);
+
+        public void PressAltShift() => 
+            PressKey(ConstantsKeys.VK_LSHIFT, false, true, false);
+
+        public void PressCtrlH() =>
+            PressKey((byte)char.ToUpper('h'), false, false, true);
         
+        public void PressCtrlS() =>
+            PressKey((byte)char.ToUpper('s'), false, false, true);
+
         public void PressEnter() => 
             PressKey(ConstantsKeys.VK_RETURN);
 
-        public void PasteText() => 
-            PressKey((int)char.ToUpper('v'), false, false, true);
+        public void PressTab() =>
+            PressKey(ConstantsKeys.VK_TAB, false, false, false);
+
+        public void PressEscape() =>
+            PressKey(ConstantsKeys.VK_ESCAPE, false, false, false);
+
+        public void PressKey(byte key, bool shift, bool alt, bool ctrl) => 
+            PressKey(key, shift, alt, ctrl, 0);
         
-        public void PressCtrlShift()
-        {
-            //PressKey(ConstantsKeys.VK_LSHIFT, false, true, false);
-            
-            const int KEYEVENTF_EXTENDEDKEY = 0x0001;
-            const int KEYEVENTF_KEYUP = 0x0002;
-            const int VK_CONTROL = 0x11; // Код клавиши "Ctrl"
-            const int VK_SHIFT = 0x10;
-            
-            WinApiWrapper.keybd_event(VK_CONTROL, 0, KEYEVENTF_EXTENDEDKEY, UIntPtr.Zero);
-
-            // Нажатие клавиши "Shift"
-            WinApiWrapper.keybd_event(VK_SHIFT, 0, KEYEVENTF_EXTENDEDKEY, UIntPtr.Zero);
-
-            // Отпускание клавиш "Ctrl" и "Shift"
-            WinApiWrapper.keybd_event(VK_SHIFT, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, UIntPtr.Zero);
-            WinApiWrapper.keybd_event(VK_CONTROL, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, UIntPtr.Zero);
-        }
-
         private void Type(string text, int delayFrom, int delayTo)
         {
-            foreach (var symbol in text)
+            foreach (var symbolInText in text)
             {
-                var shift = char.IsUpper(symbol);
+                var shift = char.IsUpper(symbolInText);
 
-                int key;
+                var lowerSymbol = char.ToLower(symbolInText);
+                var symbol = ConstantsKeys.RussianSymbols.GetValueOrDefault(lowerSymbol, lowerSymbol);
+
+                byte key;
+                
                 if (char.IsLetterOrDigit(symbol)) 
-                    key = (int)char.ToUpper(symbol);
+                    key = (byte)char.ToUpper(symbol);
+                else if (ConstantsKeys.SpecialSymbols.TryGetValue(symbol, out var symbolCode))
+                {
+                    shift = symbolCode.isShift;
+                    key = symbolCode.code;
+                }
+                else if (symbol == ' ')
+                    key = ConstantsKeys.VK_SPACE;
                 else
-                    switch (symbol)
-                    {
-                        case '.' or ',':
-                            key = ConstantsKeys.VK_DECIMAL;
-                            break;
-                        case ' ':
-                            key = ConstantsKeys.VK_SPACE;
-                            break;
-                        default:
-                            continue;
-                    }
+                    continue;
 
                 PressKey(key, shift, false, false);
 
-                int delay = random.Next(delayFrom, delayTo);
+                var delay = random.Next(delayFrom, delayTo);
 
                 Thread.Sleep(delay);
             }
         }
 
-        private void PressKey(int key, bool shift, bool alt, bool ctrl) => 
-            PressKey(key, shift, alt, ctrl, 0);
-
-        private void PressKey(int key) => 
+        private void PressKey(byte key) => 
             PressKey(key, false, false, false);
         
-        private void PressKey(int key, bool shift, bool alt, bool ctrl, int holdFor)
+        private void PressKey(byte key, bool shift, bool alt, bool ctrl, int holdFor)
         {
             byte bScan = 0x45;
             
             if (key == ConstantsKeys.VK_SNAPSHOT) bScan = 0;
             if (key == ConstantsKeys.VK_SPACE) bScan = 39;
 
-            if (alt) WinApiWrapper.keybd_event(ConstantsKeys.VK_MENU, 0, 0, 0);
-            if (ctrl) WinApiWrapper.keybd_event(ConstantsKeys.VK_LCONTROL, 0, 0, 0);
-            if (shift) WinApiWrapper.keybd_event(ConstantsKeys.VK_LSHIFT, 0, 0, 0);
+            if (alt) WinApiWrapper.keybd_event(ConstantsKeys.VK_MENU, 0, 0, UIntPtr.Zero);
+            if (ctrl) WinApiWrapper.keybd_event(ConstantsKeys.VK_LCONTROL, 0, 0, UIntPtr.Zero);
+            if (shift) WinApiWrapper.keybd_event(ConstantsKeys.VK_LSHIFT, 0, 0, UIntPtr.Zero);
 
-            WinApiWrapper.keybd_event(key, bScan, WinApiWrapper.KEYEVENTF_EXTENDEDKEY, 0);
+            WinApiWrapper.keybd_event(key, bScan, WinApiWrapper.KEYEVENTF_EXTENDEDKEY, UIntPtr.Zero);
 
             if (holdFor > 0) Thread.Sleep(holdFor);
 
-            WinApiWrapper.keybd_event(key, bScan, WinApiWrapper.KEYEVENTF_EXTENDEDKEY | WinApiWrapper.KEYEVENTF_KEYUP, 0);
+            WinApiWrapper.keybd_event(key, bScan, WinApiWrapper.KEYEVENTF_EXTENDEDKEY | WinApiWrapper.KEYEVENTF_KEYUP, UIntPtr.Zero);
 
-            if (shift) WinApiWrapper.keybd_event(ConstantsKeys.VK_LSHIFT, 0, WinApiWrapper.KEYEVENTF_KEYUP, 0);
-            if (ctrl) WinApiWrapper.keybd_event(ConstantsKeys.VK_LCONTROL, 0, WinApiWrapper.KEYEVENTF_KEYUP, 0);
-            if (alt) WinApiWrapper.keybd_event(ConstantsKeys.VK_MENU, 0, WinApiWrapper.KEYEVENTF_KEYUP, 0);
+            if (shift) WinApiWrapper.keybd_event(ConstantsKeys.VK_LSHIFT, 0, WinApiWrapper.KEYEVENTF_KEYUP, UIntPtr.Zero);
+            if (ctrl) WinApiWrapper.keybd_event(ConstantsKeys.VK_LCONTROL, 0, WinApiWrapper.KEYEVENTF_KEYUP, UIntPtr.Zero);
+            if (alt) WinApiWrapper.keybd_event(ConstantsKeys.VK_MENU, 0, WinApiWrapper.KEYEVENTF_KEYUP, UIntPtr.Zero);
         }
     }
 }

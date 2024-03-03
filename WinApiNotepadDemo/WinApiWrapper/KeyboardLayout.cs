@@ -18,11 +18,6 @@ public class KeyboardLayout
     public KeyboardLayout() => 
         InitLayouts();
 
-    public void SetKeyboardLayout(Language language) =>
-        ActivateLayout(_keyboardLayouts.TryGetValue(language, out var layoutCode)
-            ? layoutCode
-            : _keyboardLayouts[Language.English]);
-
     public void SetKeyboardLayoutAltShift(Keyboard keyboard, Language language)
     {
         var layouts = new IntPtr[256];
@@ -32,16 +27,15 @@ public class KeyboardLayout
 
         if (_keyboardLayouts.TryGetValue(language, out var layoutCode))
         {
-            var layoutName = new StringBuilder(KL_NAMELENGTH);
-            WinApiWrapper.GetKeyboardLayoutName(layoutName);
-
             foreach (var dummy in notZeroLayouts)
             {
+                var layoutName = new StringBuilder(KL_NAMELENGTH);
+                WinApiWrapper.GetKeyboardLayoutName(layoutName);
+                
                 if (layoutName.ToString() == layoutCode) break;
 
-                keyboard.PressCtrlShift();
-
-                WinApiWrapper.GetKeyboardLayoutName(layoutName);
+                keyboard.PressAltShift();
+                ActivateLayout(layoutCode);
             }
         }
     }

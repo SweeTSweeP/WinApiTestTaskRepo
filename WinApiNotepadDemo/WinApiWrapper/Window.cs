@@ -23,10 +23,10 @@ namespace WinApiNotepadDemo.WinApiWrapper
         public string? GetTitle(IntPtr hWnd)
         {
             const int nChars = 256;
-            var Buff = new StringBuilder(nChars);
+            var buff = new StringBuilder(nChars);
 
-            if (WinApiWrapper.GetWindowText(hWnd, Buff, nChars) > 0)
-                return Buff.ToString();
+            if (WinApiWrapper.GetWindowText(hWnd, buff, nChars) > 0)
+                return buff.ToString();
 
             return null;
         }

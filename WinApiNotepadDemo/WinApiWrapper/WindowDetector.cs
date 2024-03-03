@@ -10,7 +10,7 @@ namespace WinApiNotepadDemo.WinApiWrapper
         {
             List<IntPtr> result = new();
 
-            Process? process = null;
+            Process process;
 
             var p = Process.GetProcessesByName(processName);
             
