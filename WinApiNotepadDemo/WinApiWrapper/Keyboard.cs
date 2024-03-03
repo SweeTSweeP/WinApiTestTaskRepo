@@ -29,18 +29,34 @@ namespace WinApiNotepadDemo.WinApiWrapper
 
         public void PressEscape() =>
             PressKey(ConstantsKeys.VK_ESCAPE, false, false, false);
+        
+        public void PressAltF4() =>
+            PressKey(ConstantsKeys.VK_F4, false, true, false);
 
         public void PressKey(byte key, bool shift, bool alt, bool ctrl) => 
             PressKey(key, shift, alt, ctrl, 0);
         
         private void Type(string text, int delayFrom, int delayTo)
         {
+            KeyboardLayout keyboardLayout = new();
+            
             foreach (var symbolInText in text)
             {
                 var shift = char.IsUpper(symbolInText);
 
                 var lowerSymbol = char.ToLower(symbolInText);
-                var symbol = ConstantsKeys.RussianSymbols.GetValueOrDefault(lowerSymbol, lowerSymbol);
+                char symbol; 
+                
+                if (ConstantsKeys.RussianSymbols.TryGetValue(lowerSymbol, out var res))
+                {
+                    keyboardLayout.SetKeyboardLayoutAltShift(this, KeyboardLayout.Language.Russian);
+                    symbol = res;
+                }
+                else
+                {
+                    keyboardLayout.SetKeyboardLayoutAltShift(this, KeyboardLayout.Language.English);
+                    symbol = symbolInText;
+                }
 
                 byte key;
                 

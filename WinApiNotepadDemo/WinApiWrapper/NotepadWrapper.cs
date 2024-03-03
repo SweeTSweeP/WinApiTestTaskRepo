@@ -30,11 +30,13 @@ public class NotepadWrapper
         
         keyboard.Type(filePath, 5);
         keyboard.PressEnter();
+
+        if (!File.Exists($"{filePath}.txt")) return;
         
-        if (File.Exists(filePath))
-        {
-            keyboard.PressTab();
-            keyboard.PressEnter();
-        }
+        keyboard.PressTab();
+        keyboard.PressEnter();
     }
+
+    public void CloseNotepad(Keyboard keyboard) => 
+        keyboard.PressAltF4();
 }

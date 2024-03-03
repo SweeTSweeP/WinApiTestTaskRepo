@@ -10,7 +10,6 @@ namespace WinApiNotepadDemo
             WindowDetector detector = new();
             Keyboard keyboard = new();
             Clipboard clipboard = new();
-            KeyboardLayout keyboardLayout = new();
             NotepadWrapper notepadWrapper = new();
 
             System.Diagnostics.Process.Start("notepad");
@@ -27,23 +26,15 @@ namespace WinApiNotepadDemo
             keyboard.PasteText();
             keyboard.PressEnter();
 
-            keyboardLayout.SetKeyboardLayoutAltShift(keyboard, KeyboardLayout.Language.English);
             keyboard.Type("Hello ", 5);
-
-            keyboardLayout.SetKeyboardLayoutAltShift(keyboard, KeyboardLayout.Language.Russian);
             keyboard.Type("Привет ", 5);
-            
-            keyboardLayout.SetKeyboardLayoutAltShift(keyboard, KeyboardLayout.Language.English);
             keyboard.Type("!@#$%^&*(*)", 5);
             
-            keyboardLayout.SetKeyboardLayoutAltShift(keyboard, KeyboardLayout.Language.English);
             notepadWrapper.ReplaceText(keyboard, "Hello", "Bye");
-            
-            keyboardLayout.SetKeyboardLayoutAltShift(keyboard, KeyboardLayout.Language.Russian);
             notepadWrapper.ReplaceText(keyboard, "Привет", "Пока");
             
-            keyboardLayout.SetKeyboardLayoutAltShift(keyboard, KeyboardLayout.Language.English);
             notepadWrapper.SaveNotepadFile(keyboard);
+            notepadWrapper.CloseNotepad(keyboard);
         }
     }
 }
