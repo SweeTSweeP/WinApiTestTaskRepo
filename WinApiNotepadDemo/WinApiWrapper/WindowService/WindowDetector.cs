@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
-using static WinApiNotepadDemo.WinApiWrapper.EnumWindowProcess;
+using WinApiNotepadDemo.Service;
+using static WinApiNotepadDemo.WinApiWrapper.WindowService.EnumWindowProcess;
 
-namespace WinApiNotepadDemo.WinApiWrapper
+namespace WinApiNotepadDemo.WinApiWrapper.WindowService
 {
-    public class WindowDetector
+    public class WindowDetector : IWindowDetector, IService
     {
         public List<IntPtr> GetAllWindowsByProcess(string processName, bool onlyVisible)
         {
@@ -46,12 +47,7 @@ namespace WinApiNotepadDemo.WinApiWrapper
 
             return result;
         }
-
-        /// <summary>
-        /// Returns a list of child windows
-        /// </summary>
-        /// <param name="parent">Parent of the windows to return</param>
-        /// <returns>List of child windows</returns>
+        
         private List<IntPtr> GetChildWindows(IntPtr parent)
         {
             List<IntPtr> result = new();
@@ -79,13 +75,7 @@ namespace WinApiNotepadDemo.WinApiWrapper
 
             return id;
         }
-
-        /// <summary>
-        /// Callback method to be used when enumerating windows.
-        /// </summary>
-        /// <param name="handle">Handle of the next window</param>
-        /// <param name="pointer">Pointer to a GCHandle that holds a reference to the list to fill</param>
-        /// <returns>True to continue the enumeration, false to bail</returns>
+        
         private static bool EnumWindow(IntPtr handle, IntPtr pointer)
         {
             var gch = GCHandle.FromIntPtr(new IntPtr(pointer));

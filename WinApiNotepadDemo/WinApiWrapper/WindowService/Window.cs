@@ -1,8 +1,9 @@
 ﻿using System.Text;
+using WinApiNotepadDemo.Service;
 
-namespace WinApiNotepadDemo.WinApiWrapper
+namespace WinApiNotepadDemo.WinApiWrapper.WindowService
 {
-    public class Window
+    public class Window : IWindow, IService
     {
         public string GetClass(IntPtr win)
         {
@@ -14,12 +15,7 @@ namespace WinApiNotepadDemo.WinApiWrapper
 
             return title.ToString().Trim();
         }
-
-        /// <summary>
-        /// Get the title of the specified window.
-        /// </summary>
-        /// <param name="hWnd">The handle to the window.</param>
-        /// <returns>The title of the window.</returns>
+        
         public string? GetTitle(IntPtr hWnd)
         {
             const int nChars = 256;
@@ -30,19 +26,11 @@ namespace WinApiNotepadDemo.WinApiWrapper
 
             return null;
         }
-
-        /// <summary>
-        /// Maximize the specified window.
-        /// </summary>
-        /// <param name="hWnd">The handle to the window.</param>
-        public static void Maximize(IntPtr hWnd) => 
+        
+        public void Maximize(IntPtr hWnd) => 
             WinApiWrapper.ShowWindow(hWnd, 3);
-
-        /// <summary>
-        /// Put focus on a window.
-        /// </summary>
-        /// <param name="hWnd">The handle to the window.</param>
-        public static void SetFocused(IntPtr hWnd) => 
+        
+        public void SetFocused(IntPtr hWnd) => 
             WinApiWrapper.SetForegroundWindow(hWnd);
     }
 }

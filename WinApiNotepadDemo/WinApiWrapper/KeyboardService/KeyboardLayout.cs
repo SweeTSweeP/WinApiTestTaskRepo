@@ -1,8 +1,8 @@
 ﻿using System.Text;
 
-namespace WinApiNotepadDemo.WinApiWrapper;
+namespace WinApiNotepadDemo.WinApiWrapper.KeyboardService;
 
-public class KeyboardLayout
+public class KeyboardLayout : IKeyboardLayout
 {
     public enum Language
     {

@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
-using static WinApiNotepadDemo.WinApiWrapper.EnumWindowProcess;
+using WinApiNotepadDemo.WinApiWrapper.KeyboardService;
+using static WinApiNotepadDemo.WinApiWrapper.WindowService.EnumWindowProcess;
 
 
 namespace WinApiNotepadDemo.WinApiWrapper

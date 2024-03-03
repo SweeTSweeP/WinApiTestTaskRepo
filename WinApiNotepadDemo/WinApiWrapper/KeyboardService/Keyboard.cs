@@ -1,15 +1,15 @@
-﻿using System;
+﻿using WinApiNotepadDemo.Service;
 
-namespace WinApiNotepadDemo.WinApiWrapper
+namespace WinApiNotepadDemo.WinApiWrapper.KeyboardService
 {
-    public class Keyboard
+    public class Keyboard : IPCKeyboard, IService
     {
         private Random random = new(Environment.TickCount);
 
         public void Type(string text, int delay) =>
             Type(text, delay, delay);
 
-        public void PasteText() => 
+        public void PressCtrlV() => 
             PressKey((byte)char.ToUpper('v'), false, false, true);
 
         public void PressAltShift() => 
@@ -33,7 +33,7 @@ namespace WinApiNotepadDemo.WinApiWrapper
         public void PressAltF4() =>
             PressKey(ConstantsKeys.VK_F4, false, true, false);
 
-        public void PressKey(byte key, bool shift, bool alt, bool ctrl) => 
+        private void PressKey(byte key, bool shift, bool alt, bool ctrl) => 
             PressKey(key, shift, alt, ctrl, 0);
         
         private void Type(string text, int delayFrom, int delayTo)

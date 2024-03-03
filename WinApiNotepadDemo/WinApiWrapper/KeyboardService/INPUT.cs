@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace WinApiNotepadDemo.WinApiWrapper;
+namespace WinApiNotepadDemo.WinApiWrapper.KeyboardService;
 
 
 [StructLayout(LayoutKind.Sequential)]

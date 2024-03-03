@@ -1,10 +1,13 @@
-﻿namespace WinApiNotepadDemo.WinApiWrapper
+﻿using WinApiNotepadDemo.Service;
+using WinApiNotepadDemo.WinApiWrapper.WindowService;
+
+namespace WinApiNotepadDemo.WinApiWrapper
 {
     public static class Extensions
     {
-        private static Window window;
+        private static IWindow window;
 
-        private static Window Window => window ??= new Window();
+        private static IWindow Window => window ??= ServiceFactory.Window;
 
         public static string GetClass(this IntPtr window) =>
            Window.GetClass(window);

@@ -1,5 +1,10 @@
 ﻿using WinApiNotepadDemo.WinApiWrapper;
 using System.Windows;
+using WinApiNotepadDemo.NotepadService;
+using WinApiNotepadDemo.Service;
+using WinApiNotepadDemo.WinApiWrapper.ClipboardService;
+using WinApiNotepadDemo.WinApiWrapper.KeyboardService;
+using WinApiNotepadDemo.WinApiWrapper.WindowService;
 
 namespace WinApiNotepadDemo
 {
@@ -7,10 +12,10 @@ namespace WinApiNotepadDemo
     {
         static void Main(string[] args)
         {
-            WindowDetector detector = new();
-            Keyboard keyboard = new();
-            Clipboard clipboard = new();
-            NotepadWrapper notepadWrapper = new();
+            var detector = ServiceFactory.WindowDetector;
+            var keyboard = ServiceFactory.PCKeyboard;
+            var clipboard = ServiceFactory.Clipboard;
+            var notepadWrapper = ServiceFactory.NotepadWrapper;
 
             System.Diagnostics.Process.Start("notepad");
             Thread.Sleep(2000);
@@ -23,18 +28,18 @@ namespace WinApiNotepadDemo
             mainWindow.Maximize();
             mainWindow.SetFocused();
             
-            keyboard.PasteText();
+            keyboard.PressCtrlV();
             keyboard.PressEnter();
 
             keyboard.Type("Hello ", 5);
             keyboard.Type("Привет ", 5);
             keyboard.Type("!@#$%^&*(*)", 5);
             
-            notepadWrapper.ReplaceText(keyboard, "Hello", "Bye");
-            notepadWrapper.ReplaceText(keyboard, "Привет", "Пока");
+            notepadWrapper.ReplaceText("Hello", "Bye");
+            notepadWrapper.ReplaceText("Привет", "Пока");
             
-            notepadWrapper.SaveNotepadFile(keyboard);
-            notepadWrapper.CloseNotepad(keyboard);
+            notepadWrapper.SaveNotepadFile();
+            notepadWrapper.CloseNotepad();
         }
     }
 }

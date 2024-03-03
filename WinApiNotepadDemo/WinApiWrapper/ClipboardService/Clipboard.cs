@@ -1,9 +1,9 @@
 ﻿using System.Runtime.InteropServices;
-using System.Text;
+using WinApiNotepadDemo.Service;
 
-namespace WinApiNotepadDemo.WinApiWrapper;
+namespace WinApiNotepadDemo.WinApiWrapper.ClipboardService;
 
-public class Clipboard
+public class Clipboard : IClipboard, IService
 {
    public void SaveDataToClipboard(string data)
    {
