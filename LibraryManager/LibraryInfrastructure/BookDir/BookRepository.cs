@@ -25,8 +25,6 @@ namespace LibraryManager.LibraryInfrastructure.BookDir
                 return books;
             else
                 return SaveRawData();
-
-            //return books ?? SaveRawData();
         }
 
         public void SaveBooks(List<Book> books)

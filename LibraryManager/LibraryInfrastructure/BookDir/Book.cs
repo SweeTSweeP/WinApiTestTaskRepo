@@ -12,10 +12,12 @@ namespace LibraryManager.LibraryInfrastructure.BookDir
         public DateTime ReservationDate { get; set; }
         public DateTime ReturnDate { get; set; }
 
-        public void Update(int bookId, BookStatus status)
+        public void Update(int bookId, BookStatus status, DateTime reserveDate, DateTime returnDate)
         {
             if (bookId == Id)
             {
+                ReservationDate = reserveDate;
+                ReturnDate = returnDate;
                 Status = status;
                 MessageBox.Show($"Book {Title} is {Status}");
             }

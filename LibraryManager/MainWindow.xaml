@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280">
     <Grid>
-        <Separator HorizontalAlignment="Left" Margin="-99,0,0,0" VerticalAlignment="Center" Height="106" Width="707" RenderTransformOrigin="0.5,0.5">
+        <Separator HorizontalAlignment="Left" Margin="-99,334,0,0" VerticalAlignment="Top" Height="106" Width="707" RenderTransformOrigin="0.5,0.5">
             <Separator.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -17,16 +17,16 @@
                 </TransformGroup>
             </Separator.RenderTransform>
         </Separator>
-        <TextBox HorizontalAlignment="Left" Margin="117,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Number"/>
+        <TextBox x:Name="librarianIdFied" HorizontalAlignment="Left" Margin="117,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Number"/>
         <Label Content="Librarian ID:" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top"/>
         <Label Content="Librarian Name:" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="117,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117"/>
+        <TextBox x:Name="librarianNameField" HorizontalAlignment="Left" Margin="117,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117"/>
         <Separator HorizontalAlignment="Left" Margin="0,68,0,0" VerticalAlignment="Top" Height="22" Width="254"/>
         <Label Content="Reserve book for reader" HorizontalAlignment="Left" Margin="59,90,0,0" VerticalAlignment="Top"/>
-        <Label Content="Reader ID:" HorizontalAlignment="Left" Margin="10,124,0,0" VerticalAlignment="Top"/>
+        <Label Content="Reader ID:" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top"/>
         <Label Content="Book ID:" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="117,128,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Number"/>
-        <TextBox HorizontalAlignment="Left" Margin="117,159,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Number"/>
+        <TextBox x:Name="reserveBookReaderIdField" HorizontalAlignment="Left" Margin="117,136,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Number"/>
+        <TextBox x:Name="reserveBookBookIdField" HorizontalAlignment="Left" Margin="117,159,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Number"/>
         <Separator HorizontalAlignment="Left" Margin="254,68,0,0" VerticalAlignment="Top" Height="22" Width="1026"/>
         <TextBox x:Name="searchField" HorizontalAlignment="Left" Margin="285,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="241"/>
         <Label Content="Search field" HorizontalAlignment="Left" Margin="285,10,0,0" VerticalAlignment="Top"/>
@@ -44,12 +44,20 @@
             </DataGrid.Columns>
         </DataGrid>
         <CheckBox x:Name="isAll" Content="All" HorizontalAlignment="Left" Margin="722,44,0,0" VerticalAlignment="Top"/>
-        <Separator HorizontalAlignment="Left" Margin="0,231,0,0" VerticalAlignment="Top" Height="22" Width="254"/>
-        <Label Content="Return book to library" HorizontalAlignment="Left" Margin="64,280,0,0" VerticalAlignment="Top"/>
+        <Separator HorizontalAlignment="Left" Margin="0,266,0,0" VerticalAlignment="Top" Height="22" Width="254"/>
+        <Label Content="Return book to library" HorizontalAlignment="Left" Margin="64,293,0,0" VerticalAlignment="Top"/>
         <Label Content="Reservation Date" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="117,185,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Date"/>
+        <TextBox x:Name="reservationDateField" HorizontalAlignment="Left" Margin="117,185,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Date"/>
         <Label Content="Return Date" HorizontalAlignment="Left" Margin="10,207,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="117,211,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Date"/>
+        <TextBox x:Name="returnDateField" HorizontalAlignment="Left" Margin="117,211,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Date"/>
+        <Label Content="Reader ID:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        <TextBox x:Name="returnBookReaderIdField" HorizontalAlignment="Left" Margin="117,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="117" InputScope="Number"/>
+        <Label Content="Book ID:" HorizontalAlignment="Left" Margin="10,370,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="returnBookBookIdField" HorizontalAlignment="Left" Margin="117,374,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Number"/>
+        <Button x:Name="reserveBookButton" Content="Reserve Book" HorizontalAlignment="Left" Margin="90,246,0,0" VerticalAlignment="Top" Click="reserveBookButton_Click"/>
+        <Button x:Name="returnBookButton" Content="Return Book" HorizontalAlignment="Left" Margin="93,411,0,0" VerticalAlignment="Top" Click="returnBookButton_Click"/>
+        <Button x:Name="sortByAlpabetButton" Content="Sort by alphabet" HorizontalAlignment="Left" Margin="1131,41,0,0" VerticalAlignment="Top" Click="sortByAlphabetButton_Click"/>
+        <Button x:Name="reportButton" Content="Report" HorizontalAlignment="Left" Margin="107,658,0,0" VerticalAlignment="Top" Click="reportButton_Click"/>
 
     </Grid>
 </Window>

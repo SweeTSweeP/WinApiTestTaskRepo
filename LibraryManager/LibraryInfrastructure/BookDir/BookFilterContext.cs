@@ -7,6 +7,7 @@
             All,
             ByTitle,
             ByAuthor,
+            ByAlphabet
         }
 
         public List<Book> books { get; set; }
@@ -19,6 +20,7 @@
                 case FilterType.All: return All();
                 case FilterType.ByTitle: return ByTitle(value);
                 case FilterType.ByAuthor: return ByAuthor(value);
+                case FilterType.ByAlphabet: return ByAlphabet();
             }
         }
 
@@ -30,5 +32,8 @@
 
         private List<Book> ByAuthor(string value) =>
             books.Where(s => s.Author == value).ToList();
+
+        private List<Book> ByAlphabet() =>
+            books.OrderBy(s=>s.Title).ToList();
     }
 }
