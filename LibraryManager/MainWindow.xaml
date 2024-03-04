@@ -17,6 +17,39 @@
                 </TransformGroup>
             </Separator.RenderTransform>
         </Separator>
+        <TextBox HorizontalAlignment="Left" Margin="117,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Number"/>
+        <Label Content="Librarian ID:" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top"/>
+        <Label Content="Librarian Name:" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="117,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117"/>
+        <Separator HorizontalAlignment="Left" Margin="0,68,0,0" VerticalAlignment="Top" Height="22" Width="254"/>
+        <Label Content="Reserve book for reader" HorizontalAlignment="Left" Margin="59,90,0,0" VerticalAlignment="Top"/>
+        <Label Content="Reader ID:" HorizontalAlignment="Left" Margin="10,124,0,0" VerticalAlignment="Top"/>
+        <Label Content="Book ID:" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="117,128,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Number"/>
+        <TextBox HorizontalAlignment="Left" Margin="117,159,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Number"/>
+        <Separator HorizontalAlignment="Left" Margin="254,68,0,0" VerticalAlignment="Top" Height="22" Width="1026"/>
+        <TextBox x:Name="searchField" HorizontalAlignment="Left" Margin="285,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="241"/>
+        <Label Content="Search field" HorizontalAlignment="Left" Margin="285,10,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="searchButton" Content="Search" HorizontalAlignment="Left" Margin="543,41,0,0" VerticalAlignment="Top" Click="searchButton_Click"/>
+        <CheckBox x:Name="isTitle" Content="Title" HorizontalAlignment="Left" Margin="600,44,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="isAuthor" Content="Author" HorizontalAlignment="Left" Margin="652,44,0,0" VerticalAlignment="Top"/>
+        <DataGrid ItemsSource="{Binding BookViewDTO}" x:Name="bookData" Margin="254,79,0,0" SelectionChanged="DataGrid_SelectionChanged" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Book ID" Binding="{Binding BookID}"/>
+                <DataGridTextColumn Header="Book Title" MinWidth="125" Binding="{Binding BookTitle}"/>
+                <DataGridTextColumn Header="Book Author" MinWidth="225" Binding="{Binding BookAuthor}"/>
+                <DataGridTextColumn Header="Book Status" MinWidth="125" Binding="{Binding BookStatus}"/>
+                <DataGridTextColumn Header="Reservation Date" MinWidth="225" Binding="{Binding ReservationDate}"/>
+                <DataGridTextColumn Header="Return Date" MinWidth="225" Binding="{Binding ReturnDate}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <CheckBox x:Name="isAll" Content="All" HorizontalAlignment="Left" Margin="722,44,0,0" VerticalAlignment="Top"/>
+        <Separator HorizontalAlignment="Left" Margin="0,231,0,0" VerticalAlignment="Top" Height="22" Width="254"/>
+        <Label Content="Return book to library" HorizontalAlignment="Left" Margin="64,280,0,0" VerticalAlignment="Top"/>
+        <Label Content="Reservation Date" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="117,185,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Date"/>
+        <Label Content="Return Date" HorizontalAlignment="Left" Margin="10,207,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="117,211,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="117" InputScope="Date"/>
 
     </Grid>
 </Window>

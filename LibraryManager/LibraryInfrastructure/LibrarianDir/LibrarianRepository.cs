@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibraryManager.LibraryInfrastructure.LibrarianDir
 {
-    internal class Librarian
+    internal class LibrarianRepository
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public List<int> OverdueBooks { get; } = new List<int>();
     }
 }
